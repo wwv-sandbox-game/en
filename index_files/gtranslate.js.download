@@ -1,0 +1,6 @@
+// show the language selector
+window.gtranslate_installed = true;
+var gtranslate_wrapper = document.getElementById('gtranslate_wrapper');
+if(gtranslate_wrapper != null)
+    gtranslate_wrapper.style.display = 'block';
+

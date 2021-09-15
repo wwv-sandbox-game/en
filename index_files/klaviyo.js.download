@@ -1,0 +1,65 @@
+(function () {
+  var companyId = 'WtfFQz';
+
+  if (window.klaviyoModulesObject) {
+    console.warn('Cannot load klaviyo.js multiple times for the same site. Skipping account "' + companyId + '". Active account is "' + window.klaviyoModulesObject.companyId + '"');
+    return;
+  };
+
+  window._learnq = window._learnq || [];
+  window.__klKey = window.__klKey || companyId;
+  window._learnq.push(['account', companyId]);
+
+  Object.defineProperty(window, 'klaviyoModulesObject', {
+    value: { companyId: companyId, loadTime: new Date() },
+    enumerable: false,
+  });
+
+  var loadedAssets = {};
+  function addScript(asset) {
+    if (loadedAssets[asset]) return;
+    var s = document.createElement('script');
+    s.type = 'text/javascript';
+    s.async = true;
+    s.src = asset;
+    document.head.appendChild(s);
+    loadedAssets[asset] = true;
+  }
+  function addCSS(asset) {
+    var link = document.createElement('link');
+    link.rel = 'stylesheet';
+    link.href = asset;
+    document.head.appendChild(link);
+  }
+  // Feature detect static imports.
+  function supportsStaticImport() {
+    const script = document.createElement('script');
+    return 'noModule' in script;
+  }
+  // Feature detect dynamic import().
+  function supportsDynamicImport() {
+    try {
+      new Function('import("")');
+      return true;
+    } catch (err) {
+      return false;
+    }
+  }
+
+  var manifest = {'static': {'js': ['https://static.klaviyo.com/onsite/js/fender_analytics.c613d201d0308396db93.js', 'https://static.klaviyo.com/onsite/js/sharedUtils.041adc553bb06c130dcb.js', 'https://static.klaviyo.com/onsite/js/static.d615fc4f63e49baa4eda.js']}, 'signup_forms_new': {'js': ['https://static.klaviyo.com/onsite/js/sharedUtils.041adc553bb06c130dcb.js', 'https://static.klaviyo.com/onsite/js/sentry.957bb8d322d8fad44127.js', 'https://static.klaviyo.com/onsite/js/vendors~signup_forms~signup_forms_new.30c7e85ac73145101696.js', 'https://static.klaviyo.com/onsite/js/signup_forms~signup_forms_new.a09f0d970d0cbff61281.js', 'https://static.klaviyo.com/onsite/js/signup_forms_new.dc8b442fa7a300dcc1b3.js']}};
+
+  if (supportsStaticImport() || supportsDynamicImport()) {
+    manifest = {'static': {'js': ['https://static.klaviyo.com/onsite/js/fender_analytics.889ea49e34b0cc8b444a.js', 'https://static.klaviyo.com/onsite/js/sharedUtils.9c4a7a23ab27a670e389.js', 'https://static.klaviyo.com/onsite/js/static.b95ed782eed53dea54c0.js']}, 'signup_forms_new': {'js': ['https://static.klaviyo.com/onsite/js/sharedUtils.9c4a7a23ab27a670e389.js', 'https://static.klaviyo.com/onsite/js/sentry.957bb8d322d8fad44127.js', 'https://static.klaviyo.com/onsite/js/vendors~signup_forms~signup_forms_new.d00c8dcc13fc5e55e594.js', 'https://static.klaviyo.com/onsite/js/signup_forms~signup_forms_new.7620c21780a4c221d0ec.js', 'https://static.klaviyo.com/onsite/js/signup_forms_new.078d91cf57c49c11e600.js']}};
+  }
+  for (var key in manifest) {
+    if (manifest.hasOwnProperty(key)) {
+      var onsiteModule = manifest[key];
+      for (var i = 0; i < onsiteModule.js.length; i += 1) {
+        addScript(onsiteModule.js[i]);
+      }
+      if (onsiteModule.css) {
+        addCSS(onsiteModule.css);
+      }
+    }
+  }
+})();
